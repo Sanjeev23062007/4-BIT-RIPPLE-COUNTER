@@ -23,53 +23,73 @@ In timing diagram Q0 is changing as soon as the negative edge of clock pulse is 
 ![image](https://github.com/naavaneetha/4-BIT-RIPPLE-COUNTER/assets/154305477/85e1958a-2fc1-49bb-9a9f-d58ccbf3663c)
 
 **Procedure**
+/* 1.Code Overview: Understand the Verilog module ripple_counter, which includes clock (clk) and reset (rst) inputs, and a 4-bit output count. The counter increments on each positive clock edge unless reset is asserted, resetting the count to 0.
 
-1.Increment count on each positive edge of the clock.
+2.Simulation Preparation: Use a Verilog simulator (e.g., ModelSim) and write a testbench module to apply clock and reset signals while monitoring the counter output.
 
-2.Reset count to zero when it reaches 15. 
+3.Testbench Implementation: Instantiate the ripple_counter module in the testbench, generate clock and reset signals, apply them to the counter module, and observe the count output.
 
-3.Generate clock signal (clk).
+4.Simulation Execution: Compile both the counter module and the testbench, simulate the design, and verify that the counter counts from 0 to 15 (binary 1111) and resets to 0 when the reset signal is activated.
 
-4.Instantiate the RippleCounter module.
+5.Verification and Debugging: Analyze timing diagrams to ensure proper counter behavior, debug any encountered issues during simulation, and make necessary modifications to the design for optimal functionality */
 
-5.Conduct functional testing by displaying the count at each clock cycle for 16 cycles.
-
+/* write all the steps invloved */
 
 **PROGRAM**
 
- Program for 4 Bit Ripple Counter and verify its truth table in quartus using Verilog programming.
-~~~
+```
+module exp12(
+   input  wire clk,      
+   input  wire reset_n,  
+   output reg  [3:0] q   
+);
 
- Developed by: Sanjeev A
- RegisterNumber: 212224230246
 
-~~~
+   always @(negedge clk or negedge reset_n) begin
+       if (!reset_n)
+           q[0] <= 1'b0;
+       else
+           q[0] <= ~q[0];
+   end
+always @(negedge q[0] or negedge reset_n) begin
+       if (!reset_n)
+           q[1] <= 1'b0;
+       else
+           q[1] <= ~q[1];
+   end
 
-~~~
 
-module EXP12DE(clk, rst, count);
-input wire clk;
-input wire rst;
-output reg [3:0] count;
+   always @(negedge q[1] or negedge reset_n) begin
+       if (!reset_n)
+           q[2] <= 1'b0;
+       else
+           q[2] <= ~q[2];
+   end
 
-always @(posedge clk or posedge rst)
-begin
-	if(rst)
-		count <= 4'b0000;
-	else
-		count <= count + 1;
-end
+
+   always @(negedge q[2] or negedge reset_n) begin   if (!reset_n)
+           q[3] <= 1'b0;
+       else
+           q[3] <= ~q[3];
+   end
+
 endmodule
+```
 
-~~~
+/* Program for 4 Bit Ripple Counter and verify its truth table in quartus using Verilog programming.
+
+ Developed by:Sanjeev A
+ 
+ RegisterNumber:212224230246
+*/
 
 **RTL LOGIC FOR 4 Bit Ripple Counter**
-<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/bb2df995-1329-4b6c-a2c8-73b7aef11e73" />
 
+![image alt](https://github.com/Tharunkumar916/4-BIT-RIPPLE-COUNTER/blob/32e5127c798f898444cf704698f6a11dd36110fb/exp12img.jpg)
 
 **TIMING DIGRAMS FOR 4 Bit Ripple Counter**
-<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/bf646b3b-ee8f-4eb3-b300-d6baf71faf2a" />
 
+![image alt](https://github.com/Tharunkumar916/4-BIT-RIPPLE-COUNTER/blob/32ae8affdefc51c883792743a5e6d9bda7b8254a/Screenshot%202026-03-17%20005226.png)
 
 **RESULTS**
 
